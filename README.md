@@ -1,4 +1,5 @@
 # Resume-Parser-and-Analyzer
+
 import streamlit as st
 import pandas as pd
 import base64,random
@@ -37,7 +38,9 @@ def get_table_download_link(df,filename,text):
     """
     csv = df.to_csv(index=False)
     b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
+    
     # href = f'<a href="data:file/csv;base64,{b64}">Download Report</a>'
+    
     href = f'<a href="data:file/csv;base64,{b64}" download="{filename}">{text}</a>'
     return href
 
@@ -55,6 +58,7 @@ def pdf_reader(file):
         text = fake_file_handle.getvalue()
 
     # close open handles
+    
     converter.close()
     fake_file_handle.close()
     return text
@@ -62,7 +66,9 @@ def pdf_reader(file):
 def show_pdf(file_path):
     with open(file_path, "rb") as f:
         base64_pdf = base64.b64encode(f.read()).decode('utf-8')
+        
     # pdf_display = f'<embed src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf">'
+    
     pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf"></iframe>'
     st.markdown(pdf_display, unsafe_allow_html=True)
 
